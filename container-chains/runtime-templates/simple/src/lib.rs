@@ -68,9 +68,12 @@ use {
     sp_consensus_slots::{Slot, SlotDuration},
     sp_core::{MaxEncodedLen, OpaqueMetadata},
     sp_runtime::{
-        create_runtime_str, generic, impl_opaque_keys,
-        generic::Era,
-        traits::{AccountIdLookup, BlakeTwo256, Block as BlockT, Extrinsic, IdentifyAccount, Verify},
+        create_runtime_str,
+        generic::{self, Era},
+        impl_opaque_keys,
+        traits::{
+            AccountIdLookup, BlakeTwo256, Block as BlockT, Extrinsic, IdentifyAccount, Verify,
+        },
         transaction_validity::{TransactionSource, TransactionValidity},
         ApplyExtrinsicResult, MultiSignature, SaturatedConversion,
     },
@@ -78,10 +81,7 @@ use {
     sp_version::RuntimeVersion,
 };
 
-pub use pallet_worker_registration;
-pub use pallet_faucet;
-pub use pallet_edge_connect;
-pub use pallet_task_management;
+pub use {pallet_edge_connect, pallet_faucet, pallet_task_management, pallet_worker_registration};
 
 pub mod xcm_config;
 
@@ -644,93 +644,101 @@ impl pallet_multisig::Config for Runtime {
 }
 
 impl pallet_worker_registration::Config for Runtime {
-	type RuntimeEvent = RuntimeEvent;
-	type WeightInfo = ();
-	type AuthorityId = pallet_worker_registration::crypto::ClusterStatusAuthId;
+    type RuntimeEvent = RuntimeEvent;
+    type WeightInfo = ();
+    type AuthorityId = pallet_worker_registration::crypto::ClusterStatusAuthId;
 }
 
 parameter_types! {
     // The amount of token that "drips" from the faucet for every claim.
-	pub const FaucetDripAmount: Balance = 10 * MILLIUNIT;
+    pub const FaucetDripAmount: Balance = 10 * MILLIUNIT;
     // The minimum period, as a number of blocks, between consecutive claims of a given account.
-	pub const MinBlocksBetweenClaims: BlockNumber = 1 * DAYS;
+    pub const MinBlocksBetweenClaims: BlockNumber = 1 * DAYS;
     // The maximum number of times an account can claim tokens from the faucet.
-	pub const MaxClaimsPerAccount: u32 = 3;
+    pub const MaxClaimsPerAccount: u32 = 3;
 }
 
 impl pallet_faucet::Config for Runtime {
-	type Currency = Balances;
-	type DripAmount = FaucetDripAmount;
-	type RuntimeEvent = RuntimeEvent;
-	type MaxClaimsPerAccount = MaxClaimsPerAccount;
-	type MinBlocksBetweenClaims = MinBlocksBetweenClaims;
-	type WeightInfo = pallet_faucet::weights::SubstrateWeight<Runtime>;
+    type Currency = Balances;
+    type DripAmount = FaucetDripAmount;
+    type RuntimeEvent = RuntimeEvent;
+    type MaxClaimsPerAccount = MaxClaimsPerAccount;
+    type MinBlocksBetweenClaims = MinBlocksBetweenClaims;
+    type WeightInfo = pallet_faucet::weights::SubstrateWeight<Runtime>;
 }
 
 impl pallet_edge_connect::Config for Runtime {
-	type RuntimeEvent = RuntimeEvent;
-	type WeightInfo = ();
+    type RuntimeEvent = RuntimeEvent;
+    type WeightInfo = ();
 }
 
 impl pallet_task_management::Config for Runtime {
-	type RuntimeEvent = RuntimeEvent;
-	type WeightInfo = ();
+    type RuntimeEvent = RuntimeEvent;
+    type WeightInfo = ();
 }
 
 // implement `CreateSignedTransaction` to allow `create_transaction` of offchain worker for runtime
 impl<LocalCall> frame_system::offchain::CreateSignedTransaction<LocalCall> for Runtime
 where
-	RuntimeCall: From<LocalCall>,
+    RuntimeCall: From<LocalCall>,
 {
-	fn create_transaction<C: frame_system::offchain::AppCrypto<Self::Public, Self::Signature>>(
-		call: RuntimeCall,
-		public: <Signature as Verify>::Signer,
-		account: AccountId,
-		nonce: Index,
-	) -> Option<(RuntimeCall, <UncheckedExtrinsic as Extrinsic>::SignaturePayload)> {
-		let tip = 0;
-		// take the biggest period possible.
-		let period =
-			BlockHashCount::get().checked_next_power_of_two().map(|c| c / 2).unwrap_or(2) as u64;
-		let current_block = System::block_number()
-			.saturated_into::<u64>()
-			// The `System::block_number` is initialized with `n+1`,
-			// so the actual block number is `n`.
-			.saturating_sub(1);
-		let era = Era::mortal(period, current_block);
-		let extra = (
-			frame_system::CheckNonZeroSender::<Runtime>::new(),
-			frame_system::CheckSpecVersion::<Runtime>::new(),
-			frame_system::CheckTxVersion::<Runtime>::new(),
-			frame_system::CheckGenesis::<Runtime>::new(),
-			frame_system::CheckEra::<Runtime>::from(era),
-			frame_system::CheckNonce::<Runtime>::from(nonce),
-			frame_system::CheckWeight::<Runtime>::new(),
-			pallet_transaction_payment::ChargeTransactionPayment::<Runtime>::from(tip),
-		);
-		let raw_payload = SignedPayload::new(call, extra)
-			.map_err(|e| {
-				log::warn!("Unable to create signed payload: {:?}", e);
-			})
-			.ok()?;
-		let signature = raw_payload.using_encoded(|payload| C::sign(payload, public))?;
-		let address = account;
-		let (call, extra, _) = raw_payload.deconstruct();
-		Some((call, (sp_runtime::MultiAddress::Id(address), signature, extra)))
-	}
+    fn create_transaction<C: frame_system::offchain::AppCrypto<Self::Public, Self::Signature>>(
+        call: RuntimeCall,
+        public: <Signature as Verify>::Signer,
+        account: AccountId,
+        nonce: Index,
+    ) -> Option<(
+        RuntimeCall,
+        <UncheckedExtrinsic as Extrinsic>::SignaturePayload,
+    )> {
+        let tip = 0;
+        // take the biggest period possible.
+        let period = BlockHashCount::get()
+            .checked_next_power_of_two()
+            .map(|c| c / 2)
+            .unwrap_or(2) as u64;
+        let current_block = System::block_number()
+            .saturated_into::<u64>()
+            // The `System::block_number` is initialized with `n+1`,
+            // so the actual block number is `n`.
+            .saturating_sub(1);
+        let era = Era::mortal(period, current_block);
+        let extra = (
+            frame_system::CheckNonZeroSender::<Runtime>::new(),
+            frame_system::CheckSpecVersion::<Runtime>::new(),
+            frame_system::CheckTxVersion::<Runtime>::new(),
+            frame_system::CheckGenesis::<Runtime>::new(),
+            frame_system::CheckEra::<Runtime>::from(era),
+            frame_system::CheckNonce::<Runtime>::from(nonce),
+            frame_system::CheckWeight::<Runtime>::new(),
+            pallet_transaction_payment::ChargeTransactionPayment::<Runtime>::from(tip),
+        );
+        let raw_payload = SignedPayload::new(call, extra)
+            .map_err(|e| {
+                log::warn!("Unable to create signed payload: {:?}", e);
+            })
+            .ok()?;
+        let signature = raw_payload.using_encoded(|payload| C::sign(payload, public))?;
+        let address = account;
+        let (call, extra, _) = raw_payload.deconstruct();
+        Some((
+            call,
+            (sp_runtime::MultiAddress::Id(address), signature, extra),
+        ))
+    }
 }
 
 impl frame_system::offchain::SigningTypes for Runtime {
-	type Public = <Signature as Verify>::Signer;
-	type Signature = Signature;
+    type Public = <Signature as Verify>::Signer;
+    type Signature = Signature;
 }
 
 impl<C> frame_system::offchain::SendTransactionTypes<C> for Runtime
 where
-	RuntimeCall: From<C>,
+    RuntimeCall: From<C>,
 {
-	type Extrinsic = UncheckedExtrinsic;
-	type OverarchingCall = RuntimeCall;
+    type Extrinsic = UncheckedExtrinsic;
+    type OverarchingCall = RuntimeCall;
 }
 
 impl_tanssi_pallets_config!(Runtime);
@@ -775,7 +783,7 @@ construct_runtime!(
 
         RootTesting: pallet_root_testing = 100,
         AsyncBacking: pallet_async_backing::{Pallet, Storage} = 110,
-        
+
         // Cyborg Core
         WorkerRegistration: pallet_worker_registration = 120,
 

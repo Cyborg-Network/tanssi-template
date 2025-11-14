@@ -27,14 +27,16 @@ mod mock;
 mod tests;
 pub mod weights;
 
-use frame_support::traits::{Currency, Get, ReservableCurrency};
-use frame_support::transactional;
+use frame_support::{
+	traits::{Currency, Get, ReservableCurrency},
+	transactional,
+};
 pub use pallet::*;
 use sp_runtime::traits::Saturating;
 pub use weights::WeightInfo;
 // pub use frame_system::Config;
+use frame_system::pallet_prelude::BlockNumberFor;
 use sp_std::convert::TryInto;
-use frame_system::pallet_prelude::{BlockNumberFor};
 
 pub type BalanceOf<T> =
 	<<T as Config>::Currency as Currency<<T as frame_system::Config>::AccountId>>::Balance;
@@ -71,7 +73,7 @@ pub mod pallet {
 		/// The overarching event type.
 		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
 
-        /// Weight information for extrinsics in this pallet.
+		/// Weight information for extrinsics in this pallet.
 		type WeightInfo: WeightInfo;
 	}
 
@@ -109,7 +111,7 @@ pub mod pallet {
 		/// Maximum number of claims for account was exceeded
 		MaxClaimsExceeded,
 		/// Faucet is unavailable
-		FaucetOff
+		FaucetOff,
 	}
 
 	#[pallet::call]
@@ -126,14 +128,11 @@ pub mod pallet {
 		/// pallet should not be used on production / incentivized networks (so, only on
 		/// non-incentivized testnets / in non-adversarial environments).
 		#[transactional]
-        #[pallet::weight((T::WeightInfo::claim_tokens(), DispatchClass::Normal, Pays::No))]
+		#[pallet::weight((T::WeightInfo::claim_tokens(), DispatchClass::Normal, Pays::No))]
 		pub fn claim_tokens(origin: OriginFor<T>) -> DispatchResult {
-			ensure!(
-				FaucetStatus::<T>::get() == true,
-				Error::<T>::FaucetOff
-			);
-			
-			let who = ensure_signed(origin)?;  
+			ensure!(FaucetStatus::<T>::get() == true, Error::<T>::FaucetOff);
+
+			let who = ensure_signed(origin)?;
 
 			let current_block = <frame_system::Pallet<T>>::block_number();
 
@@ -153,13 +152,13 @@ pub mod pallet {
 
 						// Verify account's last claim was not less MinBlockBetweenClaims ago
 						ensure!(
-							last_claim_block.saturating_add(T::MinBlocksBetweenClaims::get())
-								< current_block,
+							last_claim_block.saturating_add(T::MinBlocksBetweenClaims::get()) <
+								current_block,
 							Error::<T>::LastClaimTooRecent
 						);
 
 						(new_claim_count, current_block)
-					}
+					},
 					None => (1, current_block),
 				};
 				// Update last claim info
@@ -178,7 +177,7 @@ pub mod pallet {
 
 			// Drop positive imbalance, which will increase the total issuance of the chain's native token
 			let imbalance = T::Currency::deposit_creating(&who, amount);
-			
+
 			drop(imbalance);
 
 			Self::deposit_event(Event::FaucetDripped(amount, who));
@@ -187,10 +186,10 @@ pub mod pallet {
 		}
 
 		#[transactional]
-        #[pallet::weight((10_000 + T::DbWeight::get().writes(1).ref_time(), DispatchClass::Normal, Pays::No))]
+		#[pallet::weight((10_000 + T::DbWeight::get().writes(1).ref_time(), DispatchClass::Normal, Pays::No))]
 		pub fn setFaucet(origin: OriginFor<T>, status: bool) -> DispatchResult {
 			let who = ensure_root(origin)?;
-		
+
 			FaucetStatus::<T>::set(status);
 
 			Self::deposit_event(Event::UpdateFaucetStatus(status));

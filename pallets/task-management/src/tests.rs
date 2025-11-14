@@ -1,9 +1,9 @@
-use crate::{mock::*, Error};
-use frame_support::{assert_noop, assert_ok};
-use frame_support::BoundedVec;
-use sp_core::H256;
-use sp_std::convert::TryFrom;
-use crate::TaskStatusType;
+use {
+    crate::{mock::*, Error, TaskStatusType},
+    frame_support::{assert_noop, assert_ok, BoundedVec},
+    sp_core::H256,
+    sp_std::convert::TryFrom,
+};
 
 #[test]
 fn it_works_for_task_scheduler() {
@@ -11,16 +11,16 @@ fn it_works_for_task_scheduler() {
         System::set_block_number(1);
         let alice = 1;
         let executor = 2;
-        
+
         // Create a task data BoundedVec
         let task_data = BoundedVec::try_from(b"some-docker-imgv.0".to_vec()).unwrap();
 
         // Register a worker for executor
         let api_info = pallet_edge_connect::types::WorkerAPI {
             ip: None,
-            domain: Some(BoundedVec::try_from(b"https://api-worker.testing".to_vec()).unwrap())
+            domain: Some(BoundedVec::try_from(b"https://api-worker.testing".to_vec()).unwrap()),
         };
-        
+
         assert_ok!(edgeConnectModule::register_worker(
             RuntimeOrigin::signed(executor),
             api_info.ip,
@@ -28,7 +28,10 @@ fn it_works_for_task_scheduler() {
         ));
 
         // Dispatch a signed extrinsic.
-        assert_ok!(TaskManagementModule::task_scheduler(RuntimeOrigin::signed(alice), task_data.clone()));
+        assert_ok!(TaskManagementModule::task_scheduler(
+            RuntimeOrigin::signed(alice),
+            task_data.clone()
+        ));
 
         // Check task allocation and owner
         let task_id = TaskManagementModule::next_task_id() - 1;
@@ -48,7 +51,7 @@ fn it_works_for_task_scheduler() {
 fn it_fails_when_no_workers_are_available() {
     new_test_ext().execute_with(|| {
         let alice = 1;
-        
+
         // Create a task data BoundedVec
         let task_data = BoundedVec::try_from(b"some-docker-imgv.0".to_vec()).unwrap();
 
@@ -72,13 +75,13 @@ fn it_works_for_submit_completed_task() {
         // Register a worker for Alice
         let api_info = pallet_edge_connect::types::WorkerAPI {
             ip: None,
-            domain: Some(BoundedVec::try_from(b"https://api-worker.testing".to_vec()).unwrap())
+            domain: Some(BoundedVec::try_from(b"https://api-worker.testing".to_vec()).unwrap()),
         };
 
         // Register a worker for Bob
         let api_info_bob = pallet_edge_connect::types::WorkerAPI {
             ip: None,
-            domain: Some(BoundedVec::try_from(b"https://api-worker2.testing".to_vec()).unwrap())
+            domain: Some(BoundedVec::try_from(b"https://api-worker2.testing".to_vec()).unwrap()),
         };
 
         assert_ok!(edgeConnectModule::register_worker(
@@ -94,7 +97,10 @@ fn it_works_for_submit_completed_task() {
         ));
 
         // Dispatch a signed extrinsic to schedule a task
-        assert_ok!(TaskManagementModule::task_scheduler(RuntimeOrigin::signed(alice), task_data.clone()));
+        assert_ok!(TaskManagementModule::task_scheduler(
+            RuntimeOrigin::signed(alice),
+            task_data.clone()
+        ));
 
         // Get the task_id of the scheduled task
         let task_id = TaskManagementModule::next_task_id() - 1;
@@ -103,7 +109,11 @@ fn it_works_for_submit_completed_task() {
         let completed_hash = H256::random();
 
         // Dispatch a signed extrinsic to submit the completed task
-        assert_ok!(TaskManagementModule::submit_completed_task(RuntimeOrigin::signed(alice), task_id, completed_hash));
+        assert_ok!(TaskManagementModule::submit_completed_task(
+            RuntimeOrigin::signed(alice),
+            task_id,
+            completed_hash
+        ));
 
         // Check task status
         let task_status = TaskManagementModule::task_status(task_id).unwrap();
@@ -129,7 +139,7 @@ fn it_fails_when_submit_completed_task_with_invalid_owner() {
         // Register a worker for Alice
         let api_info = pallet_edge_connect::types::WorkerAPI {
             ip: None,
-            domain: Some(BoundedVec::try_from(b"https://api-worker.testing".to_vec()).unwrap())
+            domain: Some(BoundedVec::try_from(b"https://api-worker.testing".to_vec()).unwrap()),
         };
 
         assert_ok!(edgeConnectModule::register_worker(
@@ -139,7 +149,10 @@ fn it_fails_when_submit_completed_task_with_invalid_owner() {
         ));
 
         // Dispatch a signed extrinsic to schedule a task
-        assert_ok!(TaskManagementModule::task_scheduler(RuntimeOrigin::signed(alice), task_data.clone()));
+        assert_ok!(TaskManagementModule::task_scheduler(
+            RuntimeOrigin::signed(alice),
+            task_data.clone()
+        ));
 
         // Get the task_id of the scheduled task
         let task_id = TaskManagementModule::next_task_id() - 1;
@@ -149,7 +162,11 @@ fn it_fails_when_submit_completed_task_with_invalid_owner() {
 
         // Dispatch a signed extrinsic to submit the completed task with Bob as the sender
         assert_noop!(
-            TaskManagementModule::submit_completed_task(RuntimeOrigin::signed(bob), task_id, completed_hash),
+            TaskManagementModule::submit_completed_task(
+                RuntimeOrigin::signed(bob),
+                task_id,
+                completed_hash
+            ),
             Error::<Test>::InvalidTaskOwner
         );
     });
@@ -168,7 +185,7 @@ fn it_works_when_verifying_task() {
         // Register a worker for executor
         let api_info_executor = pallet_edge_connect::types::WorkerAPI {
             ip: None,
-            domain: Some(BoundedVec::try_from(b"https://api-worker.testing".to_vec()).unwrap())
+            domain: Some(BoundedVec::try_from(b"https://api-worker.testing".to_vec()).unwrap()),
         };
         assert_ok!(edgeConnectModule::register_worker(
             RuntimeOrigin::signed(executor),
@@ -177,7 +194,10 @@ fn it_works_when_verifying_task() {
         ));
 
         // Dispatch a signed extrinsic to schedule a task
-        assert_ok!(TaskManagementModule::task_scheduler(RuntimeOrigin::signed(task_creator), task_data.clone()));
+        assert_ok!(TaskManagementModule::task_scheduler(
+            RuntimeOrigin::signed(task_creator),
+            task_data.clone()
+        ));
 
         // Get the task_id of the scheduled task
         let task_id = TaskManagementModule::next_task_id() - 1;
@@ -188,7 +208,7 @@ fn it_works_when_verifying_task() {
         // Register a worker for the verifier
         let api_info_verifier = pallet_edge_connect::types::WorkerAPI {
             ip: None,
-            domain: Some(BoundedVec::try_from(b"https://api-worker.testing".to_vec()).unwrap())
+            domain: Some(BoundedVec::try_from(b"https://api-worker.testing".to_vec()).unwrap()),
         };
         assert_ok!(edgeConnectModule::register_worker(
             RuntimeOrigin::signed(verifier),
@@ -197,7 +217,11 @@ fn it_works_when_verifying_task() {
         ));
 
         // Dispatch a signed extrinsic to submit the completed task by executor
-        assert_ok!(TaskManagementModule::submit_completed_task(RuntimeOrigin::signed(executor), task_id, completed_hash));
+        assert_ok!(TaskManagementModule::submit_completed_task(
+            RuntimeOrigin::signed(executor),
+            task_id,
+            completed_hash
+        ));
 
         // Check task verifications
         let verifications = TaskManagementModule::task_verifications(task_id).unwrap();
@@ -208,7 +232,11 @@ fn it_works_when_verifying_task() {
         let task_status = TaskManagementModule::task_status(task_id).unwrap();
         assert_eq!(task_status, TaskStatusType::PendingValidation);
 
-        assert_ok!(TaskManagementModule::verify_completed_task(RuntimeOrigin::signed(verifier), task_id, completed_hash));
+        assert_ok!(TaskManagementModule::verify_completed_task(
+            RuntimeOrigin::signed(verifier),
+            task_id,
+            completed_hash
+        ));
 
         let new_task_status = TaskManagementModule::task_status(task_id).unwrap();
         assert_eq!(new_task_status, TaskStatusType::Completed);
@@ -229,7 +257,7 @@ fn it_assigns_resolver_when_dispute_in_verification_and_resolves_task() {
         // Register a worker for executor
         let api_info_executor = pallet_edge_connect::types::WorkerAPI {
             ip: None,
-            domain: Some(BoundedVec::try_from(b"https://api-worker.testing".to_vec()).unwrap())
+            domain: Some(BoundedVec::try_from(b"https://api-worker.testing".to_vec()).unwrap()),
         };
         assert_ok!(edgeConnectModule::register_worker(
             RuntimeOrigin::signed(executor),
@@ -238,7 +266,10 @@ fn it_assigns_resolver_when_dispute_in_verification_and_resolves_task() {
         ));
 
         // Dispatch a signed extrinsic to schedule a task
-        assert_ok!(TaskManagementModule::task_scheduler(RuntimeOrigin::signed(task_creator), task_data.clone()));
+        assert_ok!(TaskManagementModule::task_scheduler(
+            RuntimeOrigin::signed(task_creator),
+            task_data.clone()
+        ));
 
         // Get the task_id of the scheduled task
         let task_id = TaskManagementModule::next_task_id() - 1;
@@ -249,7 +280,7 @@ fn it_assigns_resolver_when_dispute_in_verification_and_resolves_task() {
         // Register a worker for the verifier
         let api_info_verifier = pallet_edge_connect::types::WorkerAPI {
             ip: None,
-            domain: Some(BoundedVec::try_from(b"https://api-worker2.testing".to_vec()).unwrap())
+            domain: Some(BoundedVec::try_from(b"https://api-worker2.testing".to_vec()).unwrap()),
         };
         assert_ok!(edgeConnectModule::register_worker(
             RuntimeOrigin::signed(verifier),
@@ -258,7 +289,11 @@ fn it_assigns_resolver_when_dispute_in_verification_and_resolves_task() {
         ));
 
         // Dispatch a signed extrinsic to submit the completed task by executor
-        assert_ok!(TaskManagementModule::submit_completed_task(RuntimeOrigin::signed(executor), task_id, completed_hash));
+        assert_ok!(TaskManagementModule::submit_completed_task(
+            RuntimeOrigin::signed(executor),
+            task_id,
+            completed_hash
+        ));
 
         // Check task verifications
         let verifications = TaskManagementModule::task_verifications(task_id).unwrap();
@@ -272,7 +307,7 @@ fn it_assigns_resolver_when_dispute_in_verification_and_resolves_task() {
         // Register a worker for the resolver
         let api_info_resolver = pallet_edge_connect::types::WorkerAPI {
             ip: None,
-            domain: Some(BoundedVec::try_from(b"https://api-worker2.testing".to_vec()).unwrap())
+            domain: Some(BoundedVec::try_from(b"https://api-worker2.testing".to_vec()).unwrap()),
         };
         assert_ok!(edgeConnectModule::register_worker(
             RuntimeOrigin::signed(resolver),
@@ -283,7 +318,11 @@ fn it_assigns_resolver_when_dispute_in_verification_and_resolves_task() {
         // Submit differing completed hash
         let completed_hash_2 = H256([222; 32]);
 
-        assert_ok!(TaskManagementModule::verify_completed_task(RuntimeOrigin::signed(verifier), task_id, completed_hash_2));
+        assert_ok!(TaskManagementModule::verify_completed_task(
+            RuntimeOrigin::signed(verifier),
+            task_id,
+            completed_hash_2
+        ));
 
         // Ensure task remains incompleted when invalid verification
         let mut new_task_status = TaskManagementModule::task_status(task_id).unwrap();
@@ -291,10 +330,17 @@ fn it_assigns_resolver_when_dispute_in_verification_and_resolves_task() {
 
         // Check that task verification is now assigned a resolver
         let updated_verifications = TaskManagementModule::task_verifications(task_id).unwrap();
-        assert_eq!(updated_verifications.resolver.clone().unwrap().account, resolver);
+        assert_eq!(
+            updated_verifications.resolver.clone().unwrap().account,
+            resolver
+        );
 
-        assert_ok!(TaskManagementModule::resolve_completed_task(RuntimeOrigin::signed(resolver), task_id, completed_hash_2));
-        
+        assert_ok!(TaskManagementModule::resolve_completed_task(
+            RuntimeOrigin::signed(resolver),
+            task_id,
+            completed_hash_2
+        ));
+
         // Check updated task status
         new_task_status = TaskManagementModule::task_status(task_id).unwrap();
         assert_eq!(new_task_status, TaskStatusType::Completed);
@@ -315,7 +361,7 @@ fn it_reassigns_task_when_resolver_fails_to_resolve() {
         // Register a worker for executor
         let api_info_executor = pallet_edge_connect::types::WorkerAPI {
             ip: None,
-            domain: Some(BoundedVec::try_from(b"https://api-worker.testing".to_vec()).unwrap())
+            domain: Some(BoundedVec::try_from(b"https://api-worker.testing".to_vec()).unwrap()),
         };
         assert_ok!(edgeConnectModule::register_worker(
             RuntimeOrigin::signed(executor),
@@ -324,7 +370,10 @@ fn it_reassigns_task_when_resolver_fails_to_resolve() {
         ));
 
         // Dispatch a signed extrinsic to schedule a task
-        assert_ok!(TaskManagementModule::task_scheduler(RuntimeOrigin::signed(task_creator), task_data.clone()));
+        assert_ok!(TaskManagementModule::task_scheduler(
+            RuntimeOrigin::signed(task_creator),
+            task_data.clone()
+        ));
 
         // Get the task_id of the scheduled task
         let task_id = TaskManagementModule::next_task_id() - 1;
@@ -335,7 +384,7 @@ fn it_reassigns_task_when_resolver_fails_to_resolve() {
         // Register a worker for the verifier
         let api_info_verifier = pallet_edge_connect::types::WorkerAPI {
             ip: None,
-            domain: Some(BoundedVec::try_from(b"https://api-worker2.testing".to_vec()).unwrap())
+            domain: Some(BoundedVec::try_from(b"https://api-worker2.testing".to_vec()).unwrap()),
         };
         assert_ok!(edgeConnectModule::register_worker(
             RuntimeOrigin::signed(verifier),
@@ -344,7 +393,11 @@ fn it_reassigns_task_when_resolver_fails_to_resolve() {
         ));
 
         // Dispatch a signed extrinsic to submit the completed task by executor
-        assert_ok!(TaskManagementModule::submit_completed_task(RuntimeOrigin::signed(executor), task_id, completed_hash));
+        assert_ok!(TaskManagementModule::submit_completed_task(
+            RuntimeOrigin::signed(executor),
+            task_id,
+            completed_hash
+        ));
 
         // Check task verifications
         let verifications = TaskManagementModule::task_verifications(task_id).unwrap();
@@ -358,7 +411,7 @@ fn it_reassigns_task_when_resolver_fails_to_resolve() {
         // Register a worker for the resolver
         let api_info_resolver = pallet_edge_connect::types::WorkerAPI {
             ip: None,
-            domain: Some(BoundedVec::try_from(b"https://api-worker3.testing".to_vec()).unwrap())
+            domain: Some(BoundedVec::try_from(b"https://api-worker3.testing".to_vec()).unwrap()),
         };
         assert_ok!(edgeConnectModule::register_worker(
             RuntimeOrigin::signed(resolver),
@@ -369,7 +422,11 @@ fn it_reassigns_task_when_resolver_fails_to_resolve() {
         // Submit differing completed hash
         let completed_hash_2 = H256([222; 32]);
 
-        assert_ok!(TaskManagementModule::verify_completed_task(RuntimeOrigin::signed(verifier), task_id, completed_hash_2));
+        assert_ok!(TaskManagementModule::verify_completed_task(
+            RuntimeOrigin::signed(verifier),
+            task_id,
+            completed_hash_2
+        ));
 
         // Ensure task remains incompleted when invalid verification
         let mut new_task_status = TaskManagementModule::task_status(task_id).unwrap();
@@ -384,7 +441,11 @@ fn it_reassigns_task_when_resolver_fails_to_resolve() {
 
         // fails if no new workers differing from workers participating in this task
         assert_noop!(
-            TaskManagementModule::resolve_completed_task(RuntimeOrigin::signed(resolver), task_id, completed_hash_3),
+            TaskManagementModule::resolve_completed_task(
+                RuntimeOrigin::signed(resolver),
+                task_id,
+                completed_hash_3
+            ),
             Error::<Test>::NoNewWorkersAvailable
         ); // TODO: Redesign as this is potential bug for retrys that match false completed hashes
 
@@ -393,7 +454,7 @@ fn it_reassigns_task_when_resolver_fails_to_resolve() {
         // Register a worker for the new executor
         let api_info_new_executor = pallet_edge_connect::types::WorkerAPI {
             ip: None,
-            domain: Some(BoundedVec::try_from(b"https://api-worker4.testing".to_vec()).unwrap())
+            domain: Some(BoundedVec::try_from(b"https://api-worker4.testing".to_vec()).unwrap()),
         };
         assert_ok!(edgeConnectModule::register_worker(
             RuntimeOrigin::signed(new_executor),
@@ -402,8 +463,12 @@ fn it_reassigns_task_when_resolver_fails_to_resolve() {
         ));
 
         // Reassigns a new executor when resolver cannot find a matching completed hash
-        assert_ok!(TaskManagementModule::resolve_completed_task(RuntimeOrigin::signed(resolver), task_id, completed_hash_3));
-        
+        assert_ok!(TaskManagementModule::resolve_completed_task(
+            RuntimeOrigin::signed(resolver),
+            task_id,
+            completed_hash_3
+        ));
+
         // Check updated task status
         new_task_status = TaskManagementModule::task_status(task_id).unwrap();
         assert_eq!(new_task_status, TaskStatusType::Assigned);
@@ -413,7 +478,8 @@ fn it_reassigns_task_when_resolver_fails_to_resolve() {
         assert_eq!(task_allocated_to.0, new_executor);
 
         // Ensure task verifications are empty
-        let updated_verifications_after_reassignment = TaskManagementModule::task_verifications(task_id);
+        let updated_verifications_after_reassignment =
+            TaskManagementModule::task_verifications(task_id);
         assert_eq!(updated_verifications_after_reassignment, None);
     });
 }

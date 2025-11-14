@@ -19,8 +19,4 @@ benchmarks! {
 	}
 }
 
-impl_benchmark_test_suite!(
-	Faucet,
-	crate::mock::new_test_ext(),
-	crate::mock::Test,
-);
+impl_benchmark_test_suite!(Faucet, crate::mock::new_test_ext(), crate::mock::Test,);

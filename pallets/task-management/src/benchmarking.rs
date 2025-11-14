@@ -1,16 +1,18 @@
 //! Benchmarking setup for pallet-task-management
-use super::*;
-use crate::{Pallet as TaskManagementModule, Config};
-use frame_benchmarking::{benchmarks, account, whitelisted_caller};
-use frame_support::BoundedVec;
-use sp_core::H256;
-use frame_system::RawOrigin;
+use {
+    super::*,
+    crate::{Config, Pallet as TaskManagementModule},
+    frame_benchmarking::{account, benchmarks, whitelisted_caller},
+    frame_support::BoundedVec,
+    frame_system::RawOrigin,
+    sp_core::H256,
+};
 
 benchmarks! {
     task_scheduler {
         let s in 0 .. 100;
         let caller: T::AccountId = whitelisted_caller();
-        
+
         // Register a worker for the caller
         let api_info = pallet_edge_connect::types::WorkerAPI {
             ip: None,
@@ -114,7 +116,7 @@ benchmarks! {
             domain: Some(BoundedVec::try_from(b"https://api-worker.testing".to_vec()).unwrap())
         };
         pallet_edge_connect::Pallet::<T>::register_worker(RawOrigin::Signed(executor.clone()).into(), api_info_executor.ip, api_info_executor.domain)?;
-        
+
         // Create a task data
         let task_data = BoundedVec::try_from(b"some-docker-imgv.0".to_vec()).unwrap();
         TaskManagementModule::<T>::task_scheduler(RawOrigin::Signed(caller.clone()).into(), task_data.clone())?;
@@ -126,7 +128,7 @@ benchmarks! {
             domain: Some(BoundedVec::try_from(b"https://api-worker2.testing".to_vec()).unwrap())
         };
         pallet_edge_connect::Pallet::<T>::register_worker(RawOrigin::Signed(verifier.clone()).into(), api_info_verifier.ip, api_info_verifier.domain)?;
-        
+
         // Submit completed task by the executor
         let completed_hash = H256([4; 32]);
         TaskManagementModule::<T>::submit_completed_task(RawOrigin::Signed(executor.clone()).into(), task_id, completed_hash)?;
