@@ -4,10 +4,18 @@ use scale_info::TypeInfo;
 
 // Struct to hold reward rates per resource type.
 #[derive(
-	Encode, Decode, Clone, PartialEq, Eq, RuntimeDebug, TypeInfo, MaxEncodedLen, DecodeWithMemTracking,
+    Encode,
+    Decode,
+    Clone,
+    PartialEq,
+    Eq,
+    RuntimeDebug,
+    TypeInfo,
+    MaxEncodedLen,
+    DecodeWithMemTracking,
 )]
 pub struct RewardRates<Balance> {
-	pub cpu: Balance,
-	pub ram: Balance,
-	pub storage: Balance,
+    pub cpu: Balance,
+    pub ram: Balance,
+    pub storage: Balance,
 }
