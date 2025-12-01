@@ -1,0 +1,54 @@
+[package]
+name = "pallet-zk-verifier"
+description = "Pallet verifying task execution"
+version = "0.1.0"
+authors.workspace = true
+homepage.workspace = true
+repository.workspace = true
+edition.workspace = true
+publish = false
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]
+
+[dependencies]
+bls12_381 = { workspace = true, features = ["pairings", "groups", "alloc"] }
+pairing = { workspace = true, default-features = false }
+group = { workspace = true, default-features = false }
+codec = { workspace = true, features = ["derive"] }
+scale-info = { workspace = true, features = ["derive"] }
+frame-benchmarking = { workspace = true, optional = true }
+frame-support = { workspace = true }
+frame-system = { workspace = true }
+sp-io = { workspace = true }
+sp-runtime = { workspace = true }
+sp-std = { workspace = true }
+serde = { workspace = true, features = ["derive", "alloc"] }
+serde_json = { workspace = true, features = ["alloc"]}
+uint = { workspace = true, default-features = false }
+# cyborg-primitives = { workspace = true }
+
+[dev-dependencies]
+sp-core = { workspace = true }
+
+[features]
+default = ["std"]
+std = [
+	"codec/std",
+    "frame-benchmarking/std",
+	"frame-support/std",
+	"frame-system/std",
+	"scale-info/std",
+    "sp-io/std",
+	"sp-runtime/std",
+	"sp-std/std",
+]
+runtime-benchmarks = [
+	"frame-benchmarking/runtime-benchmarks",
+	"frame-support/runtime-benchmarks",
+	"frame-system/runtime-benchmarks",
+]
+try-runtime = [
+	"frame-support/try-runtime",
+	"frame-system/try-runtime",
+]

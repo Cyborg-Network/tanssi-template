@@ -20,6 +20,18 @@ scale-info = { workspace = true, features = [ "derive" ] }
 serde = { workspace = true, features = [ "derive" ] }
 smallvec = { workspace = true }
 
+
+# Cyborg ---      
+
+# Orml 
+orml-oracle = { workspace = true }
+orml-traits = { workspace = true }
+
+# Local
+cyborg-primitives = { workspace = true }
+# pallet-edge-connect = { workspace = true }
+
+# -----------------------------------------------
 # Local
 dp-consensus = { workspace = true }
 dp-impl-tanssi-pallets-config = { workspace = true }
@@ -187,6 +199,7 @@ std = [
 	"xcm-primitives/std",
 	"xcm-runtime-apis/std",
 	"xcm/std",
+	# "pallet-edge-connect/std",
 ]
 
 # Allow to print logs details (no wasm:stripped)

@@ -1401,6 +1401,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "bls12_381"
+version = "0.7.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a3c196a77437e7cc2fb515ce413a6401291578b5afc8ecb29a3c7ab957f05941"
+dependencies = [
+ "ff 0.12.1",
+ "group 0.12.1",
+ "pairing",
+ "rand_core 0.6.4",
+ "subtle 2.6.1",
+]
+
+[[package]]
 name = "bounded-collections"
 version = "0.3.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1436,7 +1449,7 @@ dependencies = [
  "sp-consensus-grandpa",
  "sp-core",
  "sp-runtime",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
 ]
 
 [[package]]
@@ -1452,7 +1465,7 @@ dependencies = [
  "serde",
  "sp-core",
  "sp-io",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
 ]
 
 [[package]]
@@ -1469,7 +1482,7 @@ dependencies = [
  "scale-info",
  "sp-core",
  "sp-runtime",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
 ]
 
 [[package]]
@@ -1486,7 +1499,7 @@ dependencies = [
  "serde",
  "sp-core",
  "sp-runtime",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
 ]
 
 [[package]]
@@ -1504,7 +1517,7 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "sp-runtime",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
 ]
 
 [[package]]
@@ -1525,7 +1538,7 @@ dependencies = [
  "sp-io",
  "sp-runtime",
  "sp-state-machine",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
  "sp-trie",
  "trie-db",
 ]
@@ -1543,7 +1556,7 @@ dependencies = [
  "serde",
  "sp-core",
  "sp-io",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
  "staging-xcm",
 ]
 
@@ -1594,7 +1607,7 @@ dependencies = [
  "snowbridge-core",
  "sp-core",
  "sp-runtime",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
  "staging-xcm",
  "staging-xcm-builder",
  "staging-xcm-executor",
@@ -1781,7 +1794,7 @@ dependencies = [
  "sp-io",
  "sp-runtime",
  "sp-state-machine",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
  "sp-trie",
  "sp-version",
  "test-relay-sproof-builder",
@@ -1799,7 +1812,7 @@ dependencies = [
  "sp-core",
  "sp-io",
  "sp-runtime",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
  "staging-xcm",
  "staging-xcm-executor",
 ]
@@ -2447,6 +2460,7 @@ dependencies = [
  "cumulus-primitives-core",
  "cumulus-primitives-timestamp",
  "cumulus-primitives-utility",
+ "cyborg-primitives",
  "dp-consensus",
  "dp-impl-tanssi-pallets-config",
  "dp-slot-duration-runtime-api",
@@ -2460,6 +2474,8 @@ dependencies = [
  "hex-literal 0.3.4",
  "log",
  "nimbus-primitives",
+ "orml-oracle",
+ "orml-traits",
  "pallet-asset-rate",
  "pallet-assets",
  "pallet-async-backing",
@@ -3113,7 +3129,7 @@ dependencies = [
  "sp-io",
  "sp-runtime",
  "sp-state-machine",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
  "sp-trie",
  "sp-version",
  "staging-xcm",
@@ -3524,6 +3540,23 @@ dependencies = [
  "quote",
  "rustversion",
  "syn 2.0.104",
+]
+
+[[package]]
+name = "cyborg-primitives"
+version = "0.1.0"
+dependencies = [
+ "frame-benchmarking",
+ "frame-support",
+ "frame-system",
+ "orml-oracle",
+ "orml-traits",
+ "parity-scale-codec",
+ "scale-info",
+ "sp-core",
+ "sp-io",
+ "sp-runtime",
+ "sp-std 14.0.0 (git+https://github.com/Cyborg-Network/polkadot-sdk?rev=1530a8826416514c3326597338b3511a55040663)",
 ]
 
 [[package]]
@@ -4394,7 +4427,7 @@ dependencies = [
  "sp-core",
  "sp-runtime",
  "sp-state-machine",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
  "sp-trie",
 ]
 
@@ -4412,7 +4445,7 @@ dependencies = [
  "sp-api",
  "sp-consensus-aura",
  "sp-runtime",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
 ]
 
 [[package]]
@@ -4433,7 +4466,7 @@ dependencies = [
  "sp-core",
  "sp-runtime",
  "sp-state-machine",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
  "sp-trie",
 ]
 
@@ -4449,7 +4482,7 @@ dependencies = [
  "sp-core",
  "sp-io",
  "sp-runtime",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
 ]
 
 [[package]]
@@ -4479,7 +4512,7 @@ dependencies = [
  "sp-core",
  "sp-io",
  "sp-runtime",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
 ]
 
 [[package]]
@@ -4594,9 +4627,9 @@ dependencies = [
  "base16ct",
  "crypto-bigint",
  "digest 0.10.7",
- "ff",
+ "ff 0.13.1",
  "generic-array 0.14.7",
- "group",
+ "group 0.13.0",
  "pkcs8",
  "rand_core 0.6.4",
  "sec1",
@@ -5163,6 +5196,16 @@ checksum = "e182f7dbc2ef73d9ef67351c5fbbea084729c48362d3ce9dd44c28e32e277fe5"
 dependencies = [
  "libc",
  "thiserror 1.0.69",
+]
+
+[[package]]
+name = "ff"
+version = "0.12.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d013fc25338cc558c5c2cfbad646908fb23591e2404481826742b651c9af7160"
+dependencies = [
+ "rand_core 0.6.4",
+ "subtle 2.6.1",
 ]
 
 [[package]]
@@ -5781,7 +5824,7 @@ dependencies = [
  "sp-runtime",
  "sp-staking",
  "sp-state-machine",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
  "sp-tracing",
  "sp-trie",
  "sp-weights",
@@ -6252,11 +6295,22 @@ dependencies = [
 
 [[package]]
 name = "group"
+version = "0.12.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5dfbfb3a6cfbd390d5c9564ab283a0349b9b9fcd46a706c1eb10e0db70bfbac7"
+dependencies = [
+ "ff 0.12.1",
+ "rand_core 0.6.4",
+ "subtle 2.6.1",
+]
+
+[[package]]
+name = "group"
 version = "0.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f0f9ef7462f7c099f518d754361858f86d8a07af53ba9af0fe635bbccb151a63"
 dependencies = [
- "ff",
+ "ff 0.13.1",
  "rand_core 0.6.4",
  "subtle 2.6.1",
 ]
@@ -8927,7 +8981,7 @@ dependencies = [
  "sp-application-crypto",
  "sp-inherents",
  "sp-runtime",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
 ]
 
 [[package]]
@@ -9383,6 +9437,60 @@ dependencies = [
 ]
 
 [[package]]
+name = "orml-oracle"
+version = "1.4.0"
+dependencies = [
+ "frame-benchmarking",
+ "frame-support",
+ "frame-system",
+ "orml-traits",
+ "orml-utilities",
+ "parity-scale-codec",
+ "scale-info",
+ "serde",
+ "sp-application-crypto",
+ "sp-core",
+ "sp-io",
+ "sp-runtime",
+ "sp-std 14.0.0 (git+https://github.com/Cyborg-Network/polkadot-sdk?rev=1530a8826416514c3326597338b3511a55040663)",
+]
+
+[[package]]
+name = "orml-traits"
+version = "1.4.0"
+dependencies = [
+ "frame-support",
+ "impl-trait-for-tuples",
+ "num-traits",
+ "orml-utilities",
+ "parity-scale-codec",
+ "paste",
+ "scale-info",
+ "serde",
+ "sp-core",
+ "sp-io",
+ "sp-runtime",
+ "sp-std 14.0.0 (git+https://github.com/Cyborg-Network/polkadot-sdk?rev=1530a8826416514c3326597338b3511a55040663)",
+ "staging-xcm",
+]
+
+[[package]]
+name = "orml-utilities"
+version = "1.4.0"
+dependencies = [
+ "frame-support",
+ "frame-system",
+ "parity-scale-codec",
+ "scale-info",
+ "serde",
+ "serde_json",
+ "sp-core",
+ "sp-io",
+ "sp-runtime",
+ "sp-std 14.0.0 (git+https://github.com/Cyborg-Network/polkadot-sdk?rev=1530a8826416514c3326597338b3511a55040663)",
+]
+
+[[package]]
 name = "overload"
 version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -9393,6 +9501,15 @@ name = "owo-colors"
 version = "4.2.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "48dd4f4a2c8405440fd0462561f0e5806bd0f77e86f51c761481bdd4018b545e"
+
+[[package]]
+name = "pairing"
+version = "0.22.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "135590d8bdba2b31346f9cd1fb2a912329f5135e832a4f422942eb6ead8b6b3b"
+dependencies = [
+ "group 0.12.1",
+]
 
 [[package]]
 name = "pallet-alt-benchmarks"
@@ -9499,7 +9616,7 @@ dependencies = [
  "sp-consensus-slots",
  "sp-core",
  "sp-runtime",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
 ]
 
 [[package]]
@@ -9518,7 +9635,7 @@ dependencies = [
  "sp-application-crypto",
  "sp-inherents",
  "sp-runtime",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
 ]
 
 [[package]]
@@ -9769,7 +9886,7 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "sp-runtime",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
  "sp-trie",
 ]
 
@@ -9816,7 +9933,7 @@ dependencies = [
  "sp-inherents",
  "sp-runtime",
  "sp-state-machine",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
  "sp-trie",
 ]
 
@@ -9985,6 +10102,24 @@ dependencies = [
 ]
 
 [[package]]
+name = "pallet-edge-connect"
+version = "0.1.0"
+dependencies = [
+ "cyborg-primitives",
+ "frame-benchmarking",
+ "frame-support",
+ "frame-system",
+ "log",
+ "pallet-timestamp",
+ "parity-scale-codec",
+ "scale-info",
+ "sp-core",
+ "sp-io",
+ "sp-runtime",
+ "sp-std 14.0.0 (git+https://github.com/Cyborg-Network/polkadot-sdk?rev=1530a8826416514c3326597338b3511a55040663)",
+]
+
+[[package]]
 name = "pallet-election-provider-multi-phase"
 version = "39.1.0"
 source = "git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503#d78fcadbaca093cd09d440f43fad47db07454a7b"
@@ -10141,7 +10276,7 @@ dependencies = [
  "sp-core",
  "sp-io",
  "sp-runtime",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
 ]
 
 [[package]]
@@ -10162,7 +10297,7 @@ dependencies = [
  "slices",
  "sp-core",
  "sp-io",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
 ]
 
 [[package]]
@@ -10185,7 +10320,7 @@ dependencies = [
  "sp-core",
  "sp-io",
  "sp-runtime",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
 ]
 
 [[package]]
@@ -10215,7 +10350,7 @@ dependencies = [
  "precompile-utils",
  "sp-core",
  "sp-runtime",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
 ]
 
 [[package]]
@@ -10256,7 +10391,7 @@ dependencies = [
  "scale-info",
  "sp-core",
  "sp-runtime",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
  "sp-weights",
  "staging-xcm",
  "staging-xcm-executor",
@@ -10278,7 +10413,7 @@ dependencies = [
  "precompile-utils",
  "sp-core",
  "sp-runtime",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
  "sp-weights",
  "staging-xcm",
  "staging-xcm-executor",
@@ -10303,7 +10438,7 @@ dependencies = [
  "sp-core",
  "sp-io",
  "sp-runtime",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
  "xcm-primitives",
 ]
 
@@ -10423,7 +10558,7 @@ dependencies = [
  "sp-arithmetic",
  "sp-io",
  "sp-runtime",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
  "staging-xcm",
 ]
 
@@ -10585,7 +10720,7 @@ dependencies = [
  "parity-scale-codec",
  "scale-info",
  "sp-runtime",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
  "xcm-primitives",
 ]
 
@@ -10639,7 +10774,7 @@ dependencies = [
  "sp-core",
  "sp-io",
  "sp-runtime",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
 ]
 
 [[package]]
@@ -10657,7 +10792,7 @@ dependencies = [
  "sp-core",
  "sp-io",
  "sp-runtime",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
  "xcm-primitives",
 ]
 
@@ -10701,6 +10836,29 @@ dependencies = [
  "parity-scale-codec",
  "polkadot-sdk-frame",
  "scale-info",
+]
+
+[[package]]
+name = "pallet-neuro-zk"
+version = "0.1.0"
+dependencies = [
+ "cyborg-primitives",
+ "frame-benchmarking",
+ "frame-support",
+ "frame-system",
+ "log",
+ "orml-oracle",
+ "orml-traits",
+ "pallet-edge-connect",
+ "pallet-payment",
+ "pallet-task-management",
+ "pallet-timestamp",
+ "parity-scale-codec",
+ "scale-info",
+ "sp-core",
+ "sp-io",
+ "sp-runtime",
+ "sp-std 14.0.0 (git+https://github.com/Cyborg-Network/polkadot-sdk?rev=1530a8826416514c3326597338b3511a55040663)",
 ]
 
 [[package]]
@@ -10840,6 +10998,27 @@ dependencies = [
  "serde",
  "sp-core",
  "sp-runtime",
+]
+
+[[package]]
+name = "pallet-payment"
+version = "0.1.0"
+dependencies = [
+ "cyborg-primitives",
+ "frame-benchmarking",
+ "frame-support",
+ "frame-system",
+ "log",
+ "pallet-balances",
+ "pallet-edge-connect",
+ "pallet-sudo",
+ "pallet-timestamp",
+ "parity-scale-codec",
+ "scale-info",
+ "sp-core",
+ "sp-io",
+ "sp-runtime",
+ "sp-std 14.0.0 (git+https://github.com/Cyborg-Network/polkadot-sdk?rev=1530a8826416514c3326597338b3511a55040663)",
 ]
 
 [[package]]
@@ -10995,7 +11174,7 @@ dependencies = [
  "sp-core",
  "sp-io",
  "sp-runtime",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
 ]
 
 [[package]]
@@ -11168,6 +11347,27 @@ dependencies = [
 ]
 
 [[package]]
+name = "pallet-status-aggregator"
+version = "0.1.0"
+dependencies = [
+ "cyborg-primitives",
+ "frame-benchmarking",
+ "frame-support",
+ "frame-system",
+ "log",
+ "orml-oracle",
+ "orml-traits",
+ "pallet-edge-connect",
+ "pallet-timestamp",
+ "parity-scale-codec",
+ "scale-info",
+ "sp-core",
+ "sp-io",
+ "sp-runtime",
+ "sp-std 14.0.0 (git+https://github.com/Cyborg-Network/polkadot-sdk?rev=1530a8826416514c3326597338b3511a55040663)",
+]
+
+[[package]]
 name = "pallet-stream-payment"
 version = "0.1.0"
 dependencies = [
@@ -11211,6 +11411,29 @@ dependencies = [
  "scale-info",
  "sp-io",
  "sp-runtime",
+]
+
+[[package]]
+name = "pallet-task-management"
+version = "0.1.0"
+dependencies = [
+ "base64 0.21.7",
+ "cyborg-primitives",
+ "frame-benchmarking",
+ "frame-support",
+ "frame-system",
+ "hex-literal 0.3.4",
+ "log",
+ "pallet-balances",
+ "pallet-edge-connect",
+ "pallet-payment",
+ "pallet-timestamp",
+ "parity-scale-codec",
+ "scale-info",
+ "sp-core",
+ "sp-io",
+ "sp-runtime",
+ "sp-std 14.0.0 (git+https://github.com/Cyborg-Network/polkadot-sdk?rev=1530a8826416514c3326597338b3511a55040663)",
 ]
 
 [[package]]
@@ -11438,7 +11661,7 @@ dependencies = [
  "scale-info",
  "sp-core",
  "sp-runtime",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
  "staging-xcm",
  "staging-xcm-builder",
  "staging-xcm-executor",
@@ -11458,7 +11681,7 @@ dependencies = [
  "scale-info",
  "sp-core",
  "sp-runtime",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
  "staging-xcm",
  "staging-xcm-builder",
 ]
@@ -11521,8 +11744,29 @@ dependencies = [
  "sp-core",
  "sp-io",
  "sp-runtime",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
  "staging-xcm",
+]
+
+[[package]]
+name = "pallet-zk-verifier"
+version = "0.1.0"
+dependencies = [
+ "bls12_381",
+ "frame-benchmarking",
+ "frame-support",
+ "frame-system",
+ "group 0.12.1",
+ "pairing",
+ "parity-scale-codec",
+ "scale-info",
+ "serde",
+ "serde_json",
+ "sp-core",
+ "sp-io",
+ "sp-runtime",
+ "sp-std 14.0.0 (git+https://github.com/Cyborg-Network/polkadot-sdk?rev=1530a8826416514c3326597338b3511a55040663)",
+ "uint 0.8.5",
 ]
 
 [[package]]
@@ -12680,7 +12924,7 @@ dependencies = [
  "sp-keystore",
  "sp-runtime",
  "sp-staking",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
  "thiserror 1.0.69",
 ]
 
@@ -12820,7 +13064,7 @@ dependencies = [
  "sp-runtime",
  "sp-session",
  "sp-staking",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
  "sp-tracing",
  "staging-xcm",
  "staging-xcm-executor",
@@ -16874,7 +17118,7 @@ dependencies = [
  "sp-core",
  "sp-io",
  "sp-runtime",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
  "ssz_rs",
  "ssz_rs_derive",
 ]
@@ -16898,7 +17142,7 @@ dependencies = [
  "sp-core",
  "sp-io",
  "sp-runtime",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
  "staging-xcm",
  "staging-xcm-builder",
  "staging-xcm-executor",
@@ -16921,7 +17165,7 @@ dependencies = [
  "serde-big-array",
  "sp-io",
  "sp-runtime",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
 ]
 
 [[package]]
@@ -16945,7 +17189,7 @@ dependencies = [
  "sp-core",
  "sp-io",
  "sp-runtime",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
  "staging-xcm",
  "staging-xcm-builder",
  "staging-xcm-executor",
@@ -16997,7 +17241,7 @@ dependencies = [
  "sp-core",
  "sp-io",
  "sp-runtime",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
  "staging-xcm",
  "staging-xcm-builder",
  "staging-xcm-executor",
@@ -17014,7 +17258,7 @@ dependencies = [
  "snowbridge-merkle-tree",
  "snowbridge-outbound-queue-primitives",
  "sp-api",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
 ]
 
 [[package]]
@@ -17040,7 +17284,7 @@ dependencies = [
  "sp-core",
  "sp-io",
  "sp-runtime",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
  "static_assertions",
 ]
 
@@ -17054,7 +17298,7 @@ dependencies = [
  "snowbridge-core",
  "snowbridge-verification-primitives",
  "sp-core",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
 ]
 
 [[package]]
@@ -17079,7 +17323,7 @@ dependencies = [
  "sp-core",
  "sp-io",
  "sp-runtime",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
  "staging-xcm",
  "staging-xcm-executor",
 ]
@@ -17094,7 +17338,7 @@ dependencies = [
  "snowbridge-core",
  "snowbridge-inbound-queue-primitives",
  "sp-core",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
 ]
 
 [[package]]
@@ -17117,7 +17361,7 @@ dependencies = [
  "sp-core",
  "sp-io",
  "sp-runtime",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
 ]
 
 [[package]]
@@ -17136,7 +17380,7 @@ dependencies = [
  "sp-core",
  "sp-io",
  "sp-runtime",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
  "staging-xcm",
  "staging-xcm-executor",
 ]
@@ -17151,7 +17395,7 @@ dependencies = [
  "scale-info",
  "snowbridge-beacon-primitives",
  "sp-core",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
 ]
 
 [[package]]
@@ -17440,7 +17684,7 @@ dependencies = [
  "sp-debug-derive",
  "sp-externalities",
  "sp-runtime-interface",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
  "sp-storage",
  "ss58-registry",
  "substrate-bip39",
@@ -17699,7 +17943,7 @@ dependencies = [
  "sp-arithmetic",
  "sp-core",
  "sp-io",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
  "sp-trie",
  "sp-weights",
  "tracing",
@@ -17718,7 +17962,7 @@ dependencies = [
  "primitive-types 0.13.1",
  "sp-externalities",
  "sp-runtime-interface-proc-macro",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
  "sp-storage",
  "sp-tracing",
  "sp-wasm-interface",
@@ -17815,6 +18059,11 @@ version = "14.0.0"
 source = "git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503#d78fcadbaca093cd09d440f43fad47db07454a7b"
 
 [[package]]
+name = "sp-std"
+version = "14.0.0"
+source = "git+https://github.com/Cyborg-Network/polkadot-sdk?rev=1530a8826416514c3326597338b3511a55040663#1530a8826416514c3326597338b3511a55040663"
+
+[[package]]
 name = "sp-storage"
 version = "22.0.0"
 source = "git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503#d78fcadbaca093cd09d440f43fad47db07454a7b"
@@ -17906,7 +18155,7 @@ dependencies = [
  "serde",
  "sp-crypto-hashing-proc-macro",
  "sp-runtime",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
  "sp-version-proc-macro",
  "thiserror 1.0.69",
 ]
@@ -20552,6 +20801,18 @@ checksum = "2896d95c02a80c6d6a5d6e953d479f5ddf2dfdb6a244441010e373ac0fb88971"
 
 [[package]]
 name = "uint"
+version = "0.8.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9db035e67dfaf7edd9aebfe8676afcd63eed53c8a4044fed514c8cccf1835177"
+dependencies = [
+ "byteorder",
+ "crunchy",
+ "rustc-hex",
+ "static_assertions",
+]
+
+[[package]]
+name = "uint"
 version = "0.9.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "76f64bba2c53b04fcab63c01a7d7427eadc821e3bc48c34dc9ba29c501164b52"
@@ -22058,7 +22319,7 @@ dependencies = [
  "primitive-types 0.13.1",
  "sp-core",
  "sp-runtime",
- "sp-std",
+ "sp-std 14.0.0 (git+https://github.com/moondance-labs/polkadot-sdk?branch=tanssi-polkadot-stable2503)",
  "staging-xcm",
 ]
 

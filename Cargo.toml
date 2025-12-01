@@ -30,6 +30,8 @@ members = [
 	"pallets/collator-assignment/runtime-api",
 	"pallets/registrar/runtime-api",
 	"primitives/*",
+	"orml/oracle",
+    "orml/traits",
 ]
 # default-members is the subset of members that is compiled when running cargo build.
 # some binaries are intentionally left out of this list because we don't want to compile them every time.
@@ -37,8 +39,12 @@ members = [
 resolver = "2"
 
 [workspace.package]
-authors = [ "Moondance Labs" ]
-repository = "https://github.com/moondance-labs/tanssi"
+# authors = [ "Moondance Labs" ]
+# repository = "https://github.com/moondance-labs/tanssi"
+authors = ["Cyborg Network <https://github.com/Cyborg-Network>"]
+edition = "2021"
+homepage = "https://cyborgnetwork.io/"
+repository = "https://github.com/Cyborg-Network/cyborg-parachain/"
 
 [workspace.lints.clippy]
 # Deny main lint groups
@@ -67,7 +73,35 @@ type_complexity = { level = "allow", priority = 3 }
 [workspace.lints.rust]
 unsafe-code = { level = "deny", priority = 1 }
 
+
+
 [workspace.dependencies]
+
+# ORML
+orml-oracle = { path = "orml/oracle", default-features = false }
+orml-traits = { path = "orml/traits", default-features = false }
+
+# Local 
+cyborg-primitives = { path = "primitives/cyborg-primitives", default-features = false }
+pallet-edge-connect = { path = "pallets/edge-connect", version = "0.1.0", default-features = false }
+pallet-payment= { path = "pallets/payment", version = "0.1.0", default-features = false }
+pallet-status-aggregator = { path = "pallets/status-aggregator", version = "0.1.0", default-features = false }
+pallet-task-management = { path = "pallets/task-management", version = "0.1.0", default-features = false }
+pallet-zk-verifier = { path = "pallets/zk-verifier", version = "0.1.0", default-features = false }
+pallet-neuro-zk = { path = "pallets/neuro-zk", version = "0.1.0", default-features = false }
+# Cyborg
+sp-std = { git = "https://github.com/Cyborg-Network/polkadot-sdk", rev = "1530a8826416514c3326597338b3511a55040663", default-features = false }
+
+# Pallet ZK Verifier
+bls12_381 = { version = "0.7.0", default-features = false }
+pairing = { version = "0.22.0", default-features = false }
+group = { version = "0.12.1", default-features = false }
+uint = { version = "0.8", default-features = false }
+
+# Pallet Task Managment
+# hex-literal = { version = "1.0.0", default-features = false }
+base64 = { version = "0.21", default-features = false }
+
 
 # Members
 pallet-alt-benchmarks = { path = "pallets/alt-benchmarks", default-features = false }
@@ -390,7 +424,7 @@ fc-storage = { git = "https://github.com/moondance-labs/frontier", branch = "tan
 bounded-collections = { version = "0.3.2", default-features = false }
 ethabi = { package = "ethabi-decode", version = "2.0.0", default-features = false }
 finality-grandpa = { version = "0.16.2", default-features = false }
-hex-literal = { version = "0.3.4" }
+hex-literal = { version = "0.3.4",default-features = false }
 impl-trait-for-tuples = "0.2.2"
 log = { version = "0.4.22", default-features = false }
 macro_rules_attribute = { version = "0.2.0" }
@@ -434,7 +468,7 @@ url = "2.2.2"
 # Dancelight runtime
 bitvec = { version = "1.0.1", default-features = false, features = [ "alloc" ] }
 separator = "0.4.1"
-serde_derive = { version = "1.0.117" }
+serde_derive = { version = "1.0.117" , default-features = false }
 static_assertions = "1.1.0"
 tiny-keccak = { version = "2.0.2", features = [ "keccak" ] }
 

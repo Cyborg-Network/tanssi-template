@@ -93,6 +93,14 @@ use {
     },
 };
 
+pub use cyborg_primitives::{
+	miner::{MinerId, MinerType},
+	oracle::{DummyCombineData, OracleKey, OracleMinerFormat, OracleValue, ProcessStatus},
+	task::TaskId,
+};
+
+// pub use pallet_edge_connect;
+
 pub mod xcm_config;
 
 // Polkadot imports
@@ -390,6 +398,12 @@ impl frame_system::Config for Runtime {
     type PostTransactions = ();
     type ExtensionsWeightInfo = weights::frame_system_extensions::SubstrateWeight<Runtime>;
 }
+
+// impl pallet_edge_connect::Config for Runtime {
+// 	type RuntimeEvent = RuntimeEvent;
+// 	type WeightInfo = weights::pallet_edge_connect::SubstrateWeight<Runtime>;
+// }
+
 
 parameter_types! {
     pub const ExistentialDeposit: Balance = EXISTENTIAL_DEPOSIT;
@@ -835,6 +849,8 @@ construct_runtime!(
         AsyncBacking: pallet_async_backing::{Pallet, Storage} = 110,
 
         OffchainWorker: pallet_ocw_testing::{Pallet, Call, Storage, Event<T>, ValidateUnsigned} = 120,
+
+        // EdgeConnect: pallet_edge_connect = 121
     }
 );
 
