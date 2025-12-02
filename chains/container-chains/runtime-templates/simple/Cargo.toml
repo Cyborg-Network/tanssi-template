@@ -29,7 +29,12 @@ orml-traits = { workspace = true }
 
 # Local
 cyborg-primitives = { workspace = true }
-# pallet-edge-connect = { workspace = true }
+pallet-edge-connect = { workspace = true }
+pallet-payment= { workspace = true }
+pallet-status-aggregator = { workspace = true }
+pallet-task-management = { workspace = true }
+pallet-zk-verifier = { workspace = true }
+pallet-neuro-zk = { workspace = true }
 
 # -----------------------------------------------
 # Local
@@ -199,7 +204,12 @@ std = [
 	"xcm-primitives/std",
 	"xcm-runtime-apis/std",
 	"xcm/std",
-	# "pallet-edge-connect/std",
+	"pallet-edge-connect/std",
+	# "orml-oracle/std",
+	# "orml-traits/std",
+	"pallet-zk-verifier/std",
+	"pallet-task-management/std",
+	"pallet-payment/std",
 ]
 
 # Allow to print logs details (no wasm:stripped)

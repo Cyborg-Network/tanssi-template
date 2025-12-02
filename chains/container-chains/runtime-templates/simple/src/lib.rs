@@ -33,6 +33,8 @@ pub use sp_runtime::BuildStorage;
 
 pub mod migrations;
 pub mod weights;
+mod oracle_router;
+use oracle_router::OracleRouter;
 
 pub use sp_runtime::{traits::ExtrinsicLike, MultiAddress, Perbill, Permill};
 use {
@@ -100,6 +102,12 @@ pub use cyborg_primitives::{
 };
 
 // pub use pallet_edge_connect;
+pub use pallet_edge_connect;
+pub use pallet_neuro_zk;
+pub use pallet_payment;
+pub use pallet_status_aggregator;
+pub use pallet_task_management;
+pub use pallet_zk_verifier;
 
 pub mod xcm_config;
 
@@ -399,10 +407,61 @@ impl frame_system::Config for Runtime {
     type ExtensionsWeightInfo = weights::frame_system_extensions::SubstrateWeight<Runtime>;
 }
 
-// impl pallet_edge_connect::Config for Runtime {
-// 	type RuntimeEvent = RuntimeEvent;
-// 	type WeightInfo = weights::pallet_edge_connect::SubstrateWeight<Runtime>;
-// }
+impl pallet_edge_connect::Config for Runtime {
+	type RuntimeEvent = RuntimeEvent;
+	type WeightInfo = weights::pallet_edge_connect::SubstrateWeight<Runtime>;
+}
+impl pallet_neuro_zk::Config for Runtime {
+	type RuntimeEvent = RuntimeEvent;
+	type WeightInfo = weights::pallet_neuro_zk::SubstrateWeight<Runtime>;
+	type AcceptanceThreshold = ConstU8<75>;
+	type AggregateLength = ConstU32<1>;
+	type NzkTaskInfoHandler = TaskManagement;
+}
+parameter_types! {
+	pub const MaxKycHashLength: u32 = 64;
+	pub const MaxPaymentIdLength: u32 = 128;
+	pub const MaxUserIdLength: u32 = 128;
+}
+
+impl pallet_payment::Config for Runtime {
+	type RuntimeEvent = RuntimeEvent;
+	type Currency = Balances;
+	type WeightInfo = weights::pallet_payment::SubstrateWeight<Runtime>;
+	type MaxKycHashLength = MaxKycHashLength;
+	type MaxPaymentIdLength = MaxPaymentIdLength;
+	type MaxUserIdLength = MaxUserIdLength;
+}
+parameter_types! {
+		pub const MaxBlockRangePeriod: BlockNumber = 50u32; // Set the max block range to 100 blocks
+}
+
+impl pallet_status_aggregator::Config for Runtime {
+	type RuntimeEvent = RuntimeEvent;
+	type WeightInfo = weights::pallet_status_aggregator::SubstrateWeight<Runtime>;
+	type MaxBlockRangePeriod = MaxBlockRangePeriod;
+	type ThresholdUptimeStatus = ConstU8<75>;
+	type MaxAggregateParamLength = ConstU32<300>;
+	type MinerInfoHandler = EdgeConnect;
+}
+impl pallet_task_management::Config for Runtime {
+	type RuntimeEvent = RuntimeEvent;
+	type WeightInfo = weights::pallet_task_management::SubstrateWeight<Runtime>;
+	type TaskConfirmationTimeout = ConstU32<75>;
+}
+parameter_types! {
+	pub const MaxPublicInputsLength: u32 = 9;
+	pub const MaxVerificationKeyLength: u32 = 4143;
+	pub const MaxProofLength: u32 = 1133;
+}
+
+impl pallet_zk_verifier::Config for Runtime {
+	type MaxPublicInputsLength = MaxPublicInputsLength;
+	type MaxProofLength = MaxProofLength;
+	type MaxVerificationKeyLength = MaxVerificationKeyLength;
+	type RuntimeEvent = RuntimeEvent;
+	type WeightInfo = ();
+}
 
 
 parameter_types! {
@@ -850,7 +909,12 @@ construct_runtime!(
 
         OffchainWorker: pallet_ocw_testing::{Pallet, Call, Storage, Event<T>, ValidateUnsigned} = 120,
 
-        // EdgeConnect: pallet_edge_connect = 121
+        EdgeConnect: pallet_edge_connect = 121,
+        TaskManagement: pallet_task_management = 122,
+        NeuroZk: pallet_neuro_zk = 123,
+        Payment: pallet_payment = 124,
+        StatusAggregator: pallet_status_aggregator = 125,
+        ZkVerifier: pallet_zk_verifier = 126,
     }
 );
 
